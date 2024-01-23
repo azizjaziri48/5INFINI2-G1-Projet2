@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 public class Etudiant implements Serializable{
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+   // @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idEtudiant;
     private String nomE;
     private String prenomE;
