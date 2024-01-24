@@ -58,6 +58,27 @@ public class EtudiantServiceImplTest {
     public void testRemoveEtudiant() {
         iEtudiantService.removeEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
     }
-
-
+    @Test
+    @Order(6)
+    public void testAssignEtudiantToDepartement() {
+        iEtudiantService.assignEtudiantToDepartement(EtudiantServiceImplTest.etudiant.getIdEtudiant(), 1);
+        Etudiant assignedEtudiant = iEtudiantService.retrieveEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
+        Assertions.assertNotNull(assignedEtudiant);
+    }
+    @Test
+    @Order(7)
+    public void testAddAndAssignEtudiantToEquipeAndContract() {
+        // je dois ajouter un contrat et une equipe pour que ça puisse me créer l'étudiant et l'affecter a un contrat et une équipe
+        Integer contratId = 1;
+        Integer equipeId = 1;
+        Etudiant resultEtudiant = iEtudiantService.addAndAssignEtudiantToEquipeAndContract(EtudiantServiceImplTest.etudiant, contratId, equipeId);
+        Assertions.assertNotNull(resultEtudiant);
+    }
+    @Test
+    @Order(8)
+    public void testGetEtudiantsByDepartement() {
+        Integer departementId = 1;
+        List<Etudiant> etudiants = iEtudiantService.getEtudiantsByDepartement(departementId);
+        Assertions.assertNotNull(etudiants);
+    }
 }
