@@ -8,8 +8,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Option;
+import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
 import java.util.Arrays;
@@ -22,10 +24,14 @@ import java.util.Optional;
 public class EtudiantServiceImplMock {
     @Mock
     EtudiantRepository etudiantRepository;
+    @Mock
+    private DepartementRepository departementRepository;
+
     @InjectMocks
     EtudiantServiceImpl etudiantService;
     Etudiant etudiant = new Etudiant(2,"Jaziri","aziz", Option.GAMIX);
     Etudiant etudiant1 = new Etudiant(3,"Jaziri1","aziz1", Option.GAMIX);
+    Departement departement = new Departement(2,"Marketing");
 
     @Test
     public void testRetrieveEtudiant () {
@@ -69,14 +75,21 @@ public class EtudiantServiceImplMock {
     @Test
     public void testRemoveEtudiant() {
         Integer idToRemove = 2;
-
         Mockito.when(etudiantRepository.findById(idToRemove)).thenReturn(Optional.of(etudiant));
-
         etudiantService.removeEtudiant(idToRemove);
-
         Mockito.verify(etudiantRepository, Mockito.times(1)).delete(etudiant);
     }
+    @Test
+    public void testAssignEtudiantToDepartement() {
+        Mockito.when(etudiantRepository.findById(etudiant.getIdEtudiant())).thenReturn(Optional.of(etudiant));
+        Mockito.when(departementRepository.findById(departement.getIdDepart())).thenReturn(Optional.of(departement));
 
+        etudiantService.assignEtudiantToDepartement(etudiant.getIdEtudiant(), departement.getIdDepart());
+
+        Mockito.verify(etudiantRepository, Mockito.times(1)).findById(etudiant.getIdEtudiant());
+        Mockito.verify(departementRepository, Mockito.times(1)).findById(departement.getIdDepart());
+        Mockito.verify(etudiantRepository, Mockito.times(1)).save(etudiant);
+    }
 
 
 
