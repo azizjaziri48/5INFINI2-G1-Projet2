@@ -1,0 +1,4 @@
+FROM openjdk:8
+EXPOSE 8080
+ADD target/ProjetDevOps-1.0.jar ProjetDevOps-1.0.jar
+ENTRYPOINT ["java", "-jar", "/ProjetDevOps-1.0.jar"]
