@@ -19,7 +19,7 @@ public class EtudiantServiceImplTest {
      IEtudiantService iEtudiantService;
     private static Etudiant etudiant = new Etudiant(2,"Jaziri","aziz", Option.GAMIX);
 
-  /*  @Test
+   @Test
     @Order(1)
     public void testRetrieveAllEtudiants() {
         List<Etudiant> listEtudiant  = iEtudiantService.retrieveAllEtudiants();
@@ -80,5 +80,5 @@ public class EtudiantServiceImplTest {
         Integer departementId = 1;
         List<Etudiant> etudiants = iEtudiantService.getEtudiantsByDepartement(departementId);
         Assertions.assertNotNull(etudiants);
-    }*/
+    }
 }
