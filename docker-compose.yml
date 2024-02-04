@@ -6,7 +6,7 @@ services:
     image: spring-app
     build: ./
     ports:
-      - "8080:8080"
+      - "8083:8083"
     environment:
       - spring.datasource.driver-class-name=com.mysql.jdbc.Driver
       - server.servlet.context-path=/kaddem
@@ -31,7 +31,7 @@ services:
   db-mysql:
     image: mysql:8
     restart: unless-stopped
-  ##  env_file: ./.env
+    env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=kaddemdb
