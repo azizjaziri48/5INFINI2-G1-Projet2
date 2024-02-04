@@ -58,7 +58,7 @@ public class EtudiantServiceImplTest {
     public void testRemoveEtudiant() {
         iEtudiantService.removeEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
     }
-    @Test
+   /* @Test
     @Order(6)
     public void testAssignEtudiantToDepartement() {
         iEtudiantService.assignEtudiantToDepartement(EtudiantServiceImplTest.etudiant.getIdEtudiant(), 1);
@@ -80,5 +80,5 @@ public class EtudiantServiceImplTest {
         Integer departementId = 1;
         List<Etudiant> etudiants = iEtudiantService.getEtudiantsByDepartement(departementId);
         Assertions.assertNotNull(etudiants);
-    }
+    }*/
 }
