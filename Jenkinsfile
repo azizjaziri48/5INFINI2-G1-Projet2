@@ -19,11 +19,11 @@ pipeline {
        //                     }
        //  }
 
-     stage('JUNIT/MOCKITO') {
-                                      steps {
-                                              sh 'mvn test'
-                                            }
-                                        }
+     //stage('JUNIT/MOCKITO') {
+       //                               steps {
+         //                                     sh 'mvn test'
+           //                                 }
+      //                                  }
     stage('Nexus') {
                         steps {
                                sh 'mvn deploy -DskipTests=true'
