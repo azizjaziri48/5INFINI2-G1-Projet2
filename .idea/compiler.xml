@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="5INFINI2-G1-Projet2" target="11" />
+      <module name="5INFINI2-G1-Projet2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
