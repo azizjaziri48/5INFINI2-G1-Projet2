@@ -7,56 +7,53 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tn.esprit.spring.kaddem.entities.Etudiant;
-import tn.esprit.spring.kaddem.entities.Option;
+import tn.esprit.spring.kaddem.entities.Universite;
 
 import java.util.List;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
-public class EtudiantServiceImplTest {
+public class UniversiteServiceImplTest {
     @Autowired
-     IEtudiantService iEtudiantService;
-    private static Etudiant etudiant = new Etudiant(2,"Jaziri","aziz", Option.GAMIX);
+    IUniversiteService iUniversiteService;
+    private static Universite universite = new Universite(2,"Esprit");
 
-   @Test
+    @Test
     @Order(1)
     public void testRetrieveAllEtudiants() {
-        List<Etudiant> listEtudiant  = iEtudiantService.retrieveAllEtudiants();
-        Assertions.assertNotNull(listEtudiant);
+        List<Universite> listUniversite  = iUniversiteService.retrieveAllUniversites();
+        Assertions.assertNotNull(listUniversite);
     }
     @Test
     @Order(2)
     void testAddEtudiant() {
-        Etudiant et = iEtudiantService.addEtudiant(EtudiantServiceImplTest.etudiant);
-        Assertions.assertNotNull(et);
-        EtudiantServiceImplTest.etudiant.setIdEtudiant(et.getIdEtudiant());
+        Universite un = iUniversiteService.addUniversite(UniversiteServiceImplTest.universite);
+        Assertions.assertNotNull(un);
+        UniversiteServiceImplTest.universite.setIdUniv(un.getIdUniv());
     }
     @Test
     @Order(3)
-    public void testUpdateEtudiant() {
-        Etudiant existingEtudiant = iEtudiantService.retrieveEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
-        System.out.println("Before Update - Existing Etudiant: " + existingEtudiant);
-        existingEtudiant.setNomE("neww");
-        Etudiant updatedEtudiant = iEtudiantService.updateEtudiant(existingEtudiant);
-        System.out.println("After Update - Updated Etudiant: " + updatedEtudiant.getNomE());
+    public void testUpdateUniversite() {
+        Universite existingUniversite = iUniversiteService.retrieveUniversite(UniversiteServiceImplTest.universite.getIdUniv());
+        System.out.println("Before Update - Existing Universite: " + existingUniversite);
+        existingUniversite.setNomUniv("neww");
+        Universite updatedUniversite = iUniversiteService.updateUniversite(existingUniversite);
+        System.out.println("After Update - Updated Universite: " + updatedUniversite.getNomUniv());
     }
 
     @Test
     @Order(4)
-    public void testRetrieveEtudiant() {
-        Etudiant retrievedEtudiant = iEtudiantService.retrieveEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
-        System.out.println("Retrieved Etudiant:");
-        System.out.println("ID: " + retrievedEtudiant.getIdEtudiant());
-        System.out.println("Nom: " + retrievedEtudiant.getNomE());
-        System.out.println("Prenom: " + retrievedEtudiant.getPrenomE());
-        System.out.println("Option: " + retrievedEtudiant.getOp());
-        Assertions.assertNotNull(retrievedEtudiant);
+    public void testRetrieveUniversite() {
+        Universite retrievedUniversite = iUniversiteService.retrieveUniversite(UniversiteServiceImplTest.universite.getIdUniv());
+        System.out.println("Retrieved Universite:");
+        System.out.println("ID: " + retrievedUniversite.getIdUniv());
+        System.out.println("Nom: " + retrievedUniversite.getNomUniv());
+        Assertions.assertNotNull(retrievedUniversite);
     }
     @Test
     @Order(5)
-    public void testRemoveEtudiant() {
-        iEtudiantService.removeEtudiant(EtudiantServiceImplTest.etudiant.getIdEtudiant());
+    public void testRemoveUniversite() {
+        iUniversiteService.deleteUniversite(UniversiteServiceImplTest.universite.getIdUniv());
     }
    /* @Test
     @Order(6)
@@ -82,3 +79,5 @@ public class EtudiantServiceImplTest {
         Assertions.assertNotNull(etudiants);
     }*/
 }
+
+
