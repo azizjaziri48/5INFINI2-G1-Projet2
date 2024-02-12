@@ -52,7 +52,7 @@ public class ContratServiceImplMock {
     public void testAddContrat() {
         Mockito.when(contratRepository.save(Mockito.any(Contrat.class))).thenReturn(contrat1);
         Contrat addedContrat = contratService.addContrat(contrat1);
-        Assertions.assertNotNull(addedContrat, "The added etudiant should not be null.");
+        Assertions.assertNotNull(addedContrat, "The added contrat should not be null.");
         Assertions.assertEquals(contrat1.getDateDebutContrat(), addedContrat.getDateDebutContrat(), "The expected Date is '...'");
         Assertions.assertEquals(contrat1.getDateFinContrat(), addedContrat.getDateFinContrat(), "The expected Date is '...'");
     }

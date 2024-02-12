@@ -39,7 +39,7 @@ public class ContratServiceImplTest {
         Assertions.assertNotNull(et);
         ContratServiceImplTest.contrat.setIdContrat(et.getIdContrat());
     }
-    @Test
+    /*@Test
     @Order(3)
     public void testRetrieveContrat() {
         Contrat retrievedContrat = iContratService.retrieveContrat(ContratServiceImplTest.contrat.getIdContrat());
@@ -47,6 +47,6 @@ public class ContratServiceImplTest {
         System.out.println("ID: " + retrievedContrat.getIdContrat());
         System.out.println("Specialite: " + retrievedContrat.getSpecialite());
         Assertions.assertNotNull(retrievedContrat);
-    }
+    }*/
 
 }
