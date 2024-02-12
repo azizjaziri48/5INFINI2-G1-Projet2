@@ -13,17 +13,17 @@ pipeline {
             }
         }
 
-       // stage('SONARQUBE') {
-       //              steps {
-       //                     sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=mariem2000'
-       //                     }
-       //  }
+        stage('SONARQUBE') {
+                     steps {
+                            sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123'
+                            }
+         }
 
-     //stage('JUNIT/MOCKITO') {
-       //                               steps {
-         //                                     sh 'mvn test'
-           //                                 }
-      //                                  }
+     stage('JUNIT/MOCKITO') {
+                                     steps {
+                                            sh 'mvn test'
+                                        }
+                                        }
     stage('Nexus') {
                         steps {
                                sh 'mvn deploy -DskipTests=true'
