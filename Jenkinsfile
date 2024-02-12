@@ -1,63 +1,103 @@
 pipeline {
+    environment {
+        registry = "atou26/projetdevops2"
+        registryCredential = 'atou26'
+        dockerImage = ''
+        dockerHubUsername = 'mohamedyassine.gharbi@esprit.tn'
+        dockerHubPassword = 'qsdffdsq26'
+    }
     agent any
+    tools {
+        maven 'M2_HOME'
+    }
     stages {
         stage('GIT') {
             steps {
-                checkout scm
-            }
+                            checkout scm
+                   }
         }
-
-        stage('COMPILING') {
+        stage('MVN CLEAN') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean'
             }
         }
-
-       stage('SONARQUBE') {
-                    steps {
-                           sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123 -Dmaven.test.skip=true';
-                           }
+        stage('MVN COMPILE') {
+            steps {
+                sh 'mvn compile'
+            }
         }
-
-     stage('JUNIT/MOCKITO') {
-                                      steps {
-                                              sh 'mvn test'
-                                            }
-                                        }
-    stage('Nexus') {
-                        steps {
-                               sh 'mvn deploy -DskipTests=true'
-                                    }
-                             }
- stage('Docker images')
-                 {
-                      steps {
-                         sh 'docker build -t kaddemimage:v${BUILD_NUMBER} -f Dockerfile ./'
-                               }
-
-                 }
-  stage('dockerhub') {
-                                             steps {
-
-                                        sh "docker login -u mohamedyassine.gharbi@esprit.tn -p qsdffdsq26"
-                                        sh "docker tag kaddemimage:v${BUILD_NUMBER} yassinegharbi/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
-                                        sh "docker push  yassinegharbi/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
-                                             }
-                       }
-
- stage('run docker compose and kaddem project') {
-                                           steps {
-
-                                             sh 'docker compose up -d'
-                                                  }
-                                              }
+        stage('MVN SONARQUBE') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123 -Dmaven.test.skip=true'
+            }
+        }
+        stage('MOCKITO'){
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('NEXUS'){
+            steps {
+                sh 'mvn deploy'
+            }
+        }
+        stage('Building image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Deploy image') {
+                    steps {
+                        script {
+                            withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                                sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                                sh "docker tag kaddemimage:v${BUILD_NUMBER} ${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
+                                sh "docker push ${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
+                            }
+                        }
+                    }
+                }
+        stage('docker-compose') {
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
     }
+
     post {
         success {
-            echo 'Build successfully'
+            mail bcc: '',
+            body: '''
+            Dear Yassine,
+            We are happy to inform you that your pipeline build was successful.
+            Great work!
+            -Jenkins Team -
+            ''',
+            cc: '',
+            from: 'atou26.ag@gmail.com',
+            replyTo: '',
+            subject: 'Build Finished - Success',
+            to: 'atou26.ag@gmail.com'
         }
+
         failure {
-            echo 'failed '
+            mail bcc: '',
+            body: '''
+            Dear Yassine,
+            We are sorry to inform you that your pipeline build failed.
+            Keep working!
+            -Jenkins Team -
+            ''',
+            cc: '',
+            from: 'atou26.ag@gmail.com', replyTo: '',
+            subject: 'Build Finished - Failure', to: 'atou26.ag@gmail.com'
+        }
+
+        always {
+            emailext attachLog: true, body: '', subject: 'Build finished', from: 'atou26.ag@gmail.com', to: 'atou26.ag@gmail.com'
+            cleanWs()
         }
     }
- }
+}
