@@ -49,11 +49,38 @@ stage('stage 6 Docker images')
  }
 
     post {
-        success {
-            echo 'Build successfully'
+            success {
+                mail bcc: '',
+                body: '''
+                'Dear Yassine ,
+                we are happy to inform you that your pipeline build was successful.
+                Great work!
+                    -Jenkins Team - ''',
+                cc: '',
+                from: 'atou26.ag@gmail.com',
+                replyTo: '',
+                subject: 'Build Finished - Success',
+                to: 'atou26.ag@gmail.com'
+            }
+
+            failure {
+                mail bcc: '',
+                body: '''
+                'Dear Yassine,
+                we are sorry to inform you that your pipeline build failed.
+                Keep working!
+                    -Jenkins Team - ''',
+                cc: '',
+                from: 'atou26.ag@gmail.com', replyTo: '',
+                subject: 'Build Finished - Failure', to: 'atou26.ag@gmail.com'
+            }
+
+            always {
+                emailext attachLog: true, body: '', subject: 'Build finished', from: 'atou26.ag@gmail.com', to: 'atou26.ag@gmail.com'
+                cleanWs()
+            }
+
         }
-        failure {
-            echo 'failed '
-        }
-    }
+
+
  }
