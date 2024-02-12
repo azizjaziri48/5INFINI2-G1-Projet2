@@ -1,43 +1,43 @@
 pipeline {
     agent any
     stages {
-        stage('stage 1 github') {
+        stage('Github') {
             steps {
                 checkout scm
             }
         }
 
-        stage('stage 2 compiler') {
+        stage('Compiler') {
             steps {
                 sh 'mvn clean compile'
             }
         }
 
-stage('stage 3 sonarqube') {
+stage('Sonarqube') {
                steps {
                       sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123'
                      }
 
         }
-             stage('stage 4 JUNIT/MOCKITO') {
+             stage('Junit/Mockito') {
                                               steps {
                                                       sh 'mvn test'
                                                     }
                                                 }
-         stage('stage 5 nexus') {
+         stage('Nexus') {
                                  steps {
                                         sh 'mvn deploy -DskipTests=true'
                                              }
                                       }
 
-stage('stage 6 Docker images')
+stage('Docker images')
                  {
                       steps {
                          sh 'docker build -t kaddemimage:v${BUILD_NUMBER} -f Dockerfile ./'
                                }
 
                  }
-                 stage('dockerhub') {
+                 stage('DockerHub') {
                                                               steps {
 
                                                          sh "docker login -u atou26 -p qsdffdsq26"
