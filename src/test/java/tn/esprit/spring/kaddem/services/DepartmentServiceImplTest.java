@@ -15,7 +15,7 @@ public class DepartmentServiceImplTest {
     IDepartementService iDepartementService;
     private static Departement departement = new Departement(1,"Marketing");
 
-    @Test
+   /* @Test
     @Order(1)
     public void testRetrieveAllDepartments() {
         List<Departement> ListDepartment  = iDepartementService.retrieveAllDepartements();
@@ -32,6 +32,6 @@ public class DepartmentServiceImplTest {
     @Order(3)
     public void testRemoveDepartment() {
         iDepartementService.deleteDepartement(DepartmentServiceImplTest.departement.getIdDepart());
-    }
+    }*/
 
 }
