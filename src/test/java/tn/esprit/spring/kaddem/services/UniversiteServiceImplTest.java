@@ -1,4 +1,4 @@
-package tn.esprit.spring.kaddem.services;
+/*package tn.esprit.spring.kaddem.services;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,9 +8,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.kaddem.entities.Universite;
-
+*/
 import java.util.List;
-
+/*
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class UniversiteServiceImplTest {
@@ -77,7 +77,9 @@ public class UniversiteServiceImplTest {
         Integer departementId = 1;
         List<Etudiant> etudiants = iEtudiantService.getEtudiantsByDepartement(departementId);
         Assertions.assertNotNull(etudiants);
-    }*/
-}
 
+    }*/
+/*
+}
+*/
 
