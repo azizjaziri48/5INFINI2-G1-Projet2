@@ -1,108 +1,59 @@
 pipeline {
-    environment {
-        registry = "atou26/projetdevops2"
-        registryCredential = 'atou26'
-        dockerImage = ''
-        dockerHubUsername = 'mohamedyassine.gharbi@esprit.tn'
-        dockerHubPassword = 'qsdffdsq26'
-    }
     agent any
-    tools {
-        maven 'M2_HOME'
-    }
     stages {
-        stage('GIT') {
+        stage('stage 1 github') {
             steps {
-                            checkout scm
-                   }
-        }
-        stage('MVN CLEAN') {
-            steps {
-                sh 'mvn clean'
+                checkout scm
             }
         }
-        stage('MVN COMPILE') {
+
+        stage('stage 2 compiler') {
             steps {
-                sh 'mvn compile'
+                sh 'mvn clean compile'
             }
         }
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123 -Dmaven.test.skip=true'
-            }
+
+stage('stage 3 sonarqube') {
+               steps {
+                      sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=123'
+                     }
+
         }
-        stage('MOCKITO'){
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('NEXUS'){
-            steps {
-                sh 'mvn deploy'
-            }
-        }
-        stage('Building image') {
-                    steps {
-                        script {
-                            // Assurez-vous d'être dans le répertoire du Dockerfile
-                            dir('C:/Users/hp/Desktop/jdidd/5INFINI2-G1-Projet2') {
-                                // Construisez l'image Docker avec le bon tag
-                                sh 'docker build -t kaddemimage:v${BUILD_NUMBER} -f Dockerfile .'
-                            }
-                            dockerImage = docker.build "${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
-                        }
-                    }
-                }
-        stage('Deploy image') {
-                    steps {
-                        script {
-                            withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                                sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                                sh "docker tag kaddemimage:v${BUILD_NUMBER} ${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
-                                sh "docker push ${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
-                            }
-                        }
-                    }
-                }
-        stage('docker-compose') {
-            steps {
-                sh 'docker compose up -d'
-            }
-        }
-    }
+             stage('stage 4 JUNIT/MOCKITO') {
+                                              steps {
+                                                      sh 'mvn test'
+                                                    }
+                                                }
+         stage('stage 5 nexus') {
+                                 steps {
+                                        sh 'mvn deploy -DskipTests=true'
+                                             }
+                                      }
+
+stage('stage 6 Docker images')
+                 {
+                      steps {
+                         sh 'docker build -t kaddemimage:v${BUILD_NUMBER} -f Dockerfile ./'
+                               }
+
+                 }
+                 stage('dockerhub') {
+                                                              steps {
+
+                                                         sh "docker login -u atou26 -p qsdffdsq26"
+                                                         sh "docker tag kaddemimage:v${BUILD_NUMBER} atou26/atou26-5infini2-g5-kaddem:kaddemimage"
+                                                         sh "docker push  atou26/atou26-5infini2-g5-kaddem:kaddemimage"
+                                                              }
+                                        }
+
+ }
 
     post {
         success {
-            mail bcc: '',
-            body: '''
-            Dear Yassine,
-            We are happy to inform you that your pipeline build was successful.
-            Great work!
-            -Jenkins Team -
-            ''',
-            cc: '',
-            from: 'atou26.ag@gmail.com',
-            replyTo: '',
-            subject: 'Build Finished - Success',
-            to: 'atou26.ag@gmail.com'
+            echo 'Build successfully'
         }
-
         failure {
-            mail bcc: '',
-            body: '''
-            Dear Yassine,
-            We are sorry to inform you that your pipeline build failed.
-            Keep working!
-            -Jenkins Team -
-            ''',
-            cc: '',
-            from: 'atou26.ag@gmail.com', replyTo: '',
-            subject: 'Build Finished - Failure', to: 'atou26.ag@gmail.com'
-        }
-
-        always {
-            emailext attachLog: true, body: '', subject: 'Build finished', from: 'atou26.ag@gmail.com', to: 'atou26.ag@gmail.com'
-            cleanWs()
+            echo 'failed '
         }
     }
-}
+ }
