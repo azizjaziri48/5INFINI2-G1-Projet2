@@ -26,12 +26,12 @@ public class ContratServiceImplTest {
     // En supposant que vous avez une classe Contrat avec un constructeur prenant les dates de début et de fin
     private static Contrat contrat = new Contrat(2, dateDebut, dateFin, Specialite.CLOUD, true, 10);
 
-//    @Test
-//    @Order(1)
-//    public void testRetrieveAllContrat() {
-//        List<Contrat> contratList  = iContratService.retrieveAllContrats();
-//        Assertions.assertNotNull(contratList);
-//    }
+    @Test
+    @Order(1)
+    public void testRetrieveAllContrat() {
+        List<Contrat> contratList  = iContratService.retrieveAllContrats();
+        Assertions.assertNotNull(contratList);
+    }
 //    @Test
 //    @Order(2)
 //    void testAddContrat() {
