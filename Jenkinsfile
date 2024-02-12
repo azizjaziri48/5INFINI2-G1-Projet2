@@ -41,8 +41,8 @@ stage('Docker images')
                                                               steps {
 
                                                          sh "docker login -u atou26 -p qsdffdsq26"
-                                                         sh "docker tag kaddemimage:v${BUILD_NUMBER} atou26/atou26-5infini2-g5-kaddem:kaddemimage"
-                                                         sh "docker push  atou26/atou26-5infini2-g5-kaddem:kaddemimage"
+                                                         sh "docker tag kaddemimage:v${BUILD_NUMBER} atou26/projetdevops2:kaddemimage"
+                                                         sh "docker push  atou26/projetdevops2:kaddemimage"
                                                               }
                                         }
 
