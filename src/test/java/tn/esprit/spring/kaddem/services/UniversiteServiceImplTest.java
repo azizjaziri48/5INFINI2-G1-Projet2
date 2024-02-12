@@ -18,7 +18,7 @@ public class UniversiteServiceImplTest {
     IUniversiteService iUniversiteService;
     private static Universite universite = new Universite(2,"Esprit");
 
-    /*@Test
+    @Test
     @Order(1)
     public void testRetrieveAllEtudiants() {
         List<Universite> listUniversite  = iUniversiteService.retrieveAllUniversites();
