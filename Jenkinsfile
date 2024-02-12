@@ -42,12 +42,17 @@ pipeline {
             }
         }
         stage('Building image') {
-            steps {
-                script {
-                    dockerImage = docker.build registry + ":${BUILD_NUMBER}"
+                    steps {
+                        script {
+                            // Assurez-vous d'être dans le répertoire du Dockerfile
+                            dir('C:/Users/hp/Desktop/jdidd/5INFINI2-G1-Projet2') {
+                                // Construisez l'image Docker avec le bon tag
+                                sh 'docker build -t kaddemimage:v${BUILD_NUMBER} -f Dockerfile .'
+                            }
+                            dockerImage = docker.build "${registry}/yassinegharbi-5infini2-g1-kaddem:kaddemimage"
+                        }
+                    }
                 }
-            }
-        }
         stage('Deploy image') {
                     steps {
                         script {
