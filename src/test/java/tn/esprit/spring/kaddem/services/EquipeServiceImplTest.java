@@ -15,10 +15,10 @@ import java.util.List;
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 public class EquipeServiceImplTest {
-    @Autowired
+   /* @Autowired
     IEquipeService iEquipeService;
     private static Equipe equipe = new Equipe(2,"samar", Niveau.EXPERT);
-   /* @Test
+    @Test
     @Order(1)
     public void testRetrieveAllEquipes() {
         List<Equipe> listEquipe  = iEquipeService.retrieveAllEquipes();
